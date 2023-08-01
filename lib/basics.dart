@@ -105,4 +105,157 @@ main() {
   print('$numberOne == $numberTwo = ${numberOne == numberTwo}');
   print('$numberOne != $numberTwo = ${numberOne != numberTwo}');
 
+  print('------------------');
+  // && || !
+  // += -= *= /= %=
+  // ? ! ?? ??= ( OOP )
+  // ? :
+  // is is!
+
+  // && => And
+  // || => Or
+  // !  => Not
+
+  print(!true); // Not true  = false
+  print(!false); // Not false = true
+
+  bool test = false;
+  print(!test); // Not false = true
+
+  print('---------------');
+  // And &&
+  // Is 10 in range 5..15
+  int num1 = 4;
+  print(num1 > 5 && num1 < 15);
+
+  // Or ||
+  print(num1 > 5 || num1 < 15);
+
+  print('-------------');
+  // += -= *= /= %=
+  double num2 = 15;
+  // num2 = num2 + 5;
+  num2 += 5;
+  print(num2);
+
+  // num2 = num2 * 5;
+  num2 *= 5;
+  print(num2);
+
+  // num2 = num2 / 4;
+  num2 /= 4;
+  print(num2);
+
+  // num2 = num2 - 5;
+  num2 -= 5;
+  print(num2);
+
+  // num2 = num2 % 5;
+  num2 %= 5;
+  print(num2);
+
+  // is is! => DataType
+
+  int a = 5;
+  print(a is String);
+  print(a is bool);
+  print(a is int);
+  print(a is! double);
+
+  print('---------------');
+  // ? : => simple condition
+  // condition ? resultOne (true) : resultTwo (false)
+  // condition ? Colors.green : Colors.red
+  // condition ? Icons.success : Icons.failure
+
+  String message = 10 > 50 ? "Yes" : "No";
+  print(message);
+  int ternaryResult = 20 >= 20 ? 1 : 0;
+  print(ternaryResult);
+
+  // Conditions => if condition , switch case
+  // if ( condition ) { body } else { body }
+
+  print('amir' == 'amir');
+  print('Amir' == 'amir');
+
+  if (10 < 5) {
+    print('10 Bigger than 5');
+  } else {
+    print('10 smaller than 5');
+  }
+
+  int num3 = 20;
+  if (num3 > 5 && num3 < 15) {
+    print('num3 is a valid number');
+  } else {
+    print('num3 is a not valid number');
+  }
+
+  // String message = 10 > 50 ? "Yes" : "No";
+
+  if (10 > 50) {
+    print('Yes');
+  } else {
+    print('No');
+  }
+
+  // requested , accept , reject , onTheWay , delivered , refused , cancelled
+  String orderStatus = "reject";
+
+  if (orderStatus == "requested") {
+    print('Order status : requested');
+  } else if (orderStatus == "accept") {
+    print('Order status : accept');
+  } else if (orderStatus == "reject") {
+    print('Order status : reject');
+  } else {
+    print('Order status : unknown');
+  }
+
+  if (orderStatus == "requested")
+    print('Order status : requested');
+  else if (orderStatus == "accept")
+    print('Order status : accept');
+  else if (orderStatus == "reject")
+    print('Order status : reject');
+  else
+    print('Order status : unknown');
+
+  // switch ( variable ) { body }
+  // switch ( variable ) { case requested : { case body } break; }
+  switch (orderStatus) {
+    case "requested":
+      {
+        print('Order status : requested');
+      }
+      break;
+    case "accept":
+      {
+        print('Order status : accept');
+      }
+      break;
+    default:
+      {
+        print('Order status : unknown');
+      }
+  }
+
+  int dayOfWeek = 2;
+
+  switch (dayOfWeek) {
+    case 1:
+      break;
+    case 1:
+      print('Saturday');
+      break;
+    case 2:
+      print('Sunday');
+      break;
+    case 3:
+      print('Monday');
+      break;
+    default:
+      print('Invalid day number');
+  }
 }
