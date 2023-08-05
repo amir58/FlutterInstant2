@@ -258,4 +258,177 @@ main() {
     default:
       print('Invalid day number');
   }
+
+  // Loops ( for, while, do while )
+  // Lists
+  // Strings
+  // Quiz => 10:20
+
+  // while
+  print('-------------------');
+  print('Start while');
+  // variable, condition, ( increment/decrement )
+  int x = 0; // 5
+
+  while (x < 5) {
+    print(x);
+    x++;
+  }
+  print('End while');
+
+  print('----------------');
+  for (int x = 0; x < 5; x++) {
+    print(x);
+  }
+
+  print('----------------');
+  // x = 20
+  for (int x = 5; x <= 20; x += 5) {
+    print(x);
+  }
+
+  print('----------------');
+  // continue
+  for (int x = 0; x < 5; x++) {
+    if (x == 3) {
+      continue;
+    }
+    print(x);
+  }
+
+  print('----------------');
+  // continue
+  for (int x = 0; x < 5; x++) {
+    print(x);
+    if (x == 3) {
+      break;
+    }
+  }
+
+  print('----------------');
+  int y = 0;
+
+  do {
+    print(y);
+    y++;
+  } while (y > 5);
+
+  print('-----------------');
+  // Lists
+  // CRUD => Create, Read, Update, Delete
+  List<String> names = [];
+  names.add("Khairy");
+  names.add("Elhossiny");
+  names.add("Ali Amir");
+
+  List<String> girls = [
+    'Esraa',
+    'Menna',
+    'Mayson',
+    'Nirmeen',
+    'Rana',
+    'Salma',
+    'Shahd',
+    'Shahd',
+  ];
+
+  names.addAll(girls);
+  names.addAll(['Ali Hassan', 'Disoky']);
+  names.add('Hamdy');
+  names.add('Ziad');
+  names.add('Raaed');
+
+  print(names); // Read all
+  print(names.length);
+  // first index = 0 , last index = length - 1
+  // names[0] = "Khairy";
+  // names[1] = "Elhossiny";
+  // names[2] = "Elhossiny";
+  // names[15] = "Raaed";
+  print(names[15]);
+  print(names.elementAt(5));
+  print(names.getRange(0, 2));
+  print(names.getRange(8, 12));
+
+  // Range error
+  // print(names[16]);
+
+  // Range error
+  // List<String> testNames = [];
+  // testNames[0];
+
+  // Update
+  names[11] = "Ahmed";
+  print(names);
+
+  // More
+  print(names.isEmpty);
+  print(names.isNotEmpty);
+  print(names.first);
+  print(names.last);
+  print(names.contains("Ziad"));
+  print(names.contains("ziad"));
+  // names.clear(); // Delete all names
+  print(names.indexOf("Ali Amir"));
+
+  names = names.reversed.toList();
+
+  print(names);
+
+  // Delete ( 5 ways )
+  print(names.removeLast());
+  print(names.removeAt(1));
+  print(names.remove("disoky"));
+  print(names.remove("Disoky"));
+  print(names);
+  names.removeRange(8, 12);
+  print(names);
+  // print(names.remove("Shahd"));
+  names.removeWhere((element) => element == "Shahd");
+  print(names);
+
+  print('-------------------------');
+  // Strings
+  String welcome = "Welcome to flutter course";
+  print(welcome.length);
+  print(welcome.isEmpty);
+  print(welcome.isNotEmpty);
+  print(welcome.toUpperCase());
+  print(welcome.toLowerCase());
+  print(welcome.contains('To'));
+  print(welcome.contains('flutter'));
+  print(welcome.substring(8, 10));
+  print(welcome.split(" "));
+
+  String dateTime = "2023-08-05 9:43PM";
+  List<String> dateTimes = dateTime.split(" ");
+  print(dateTimes);
+  print(dateTimes[0]);
+  print(dateTimes[1]);
+  String date = dateTimes[0];
+  print(date.split('-'));
+
+  String email = " amir@ gmail.com ";
+  print(email);
+  print(email.replaceAll(" ", ""));
+  print(email.trim());
+  print(email.trimRight());
+  print(email.trimLeft());
+
+  // 01116036002
+  // +201116036002 ( VALID )
+  // 00201116036002
+  // 0111 6036 002
+  // +20 111 6036 002
+  // 002 0111 6036 002
+  // 0111-6036-002
+  // +20-111-6036-002
+  // 002-0111-6036-002
+  print('--------------');
+  String phoneNumber = "002 0111 6036-002";
+  if (phoneNumber.startsWith("00")) {
+    phoneNumber = phoneNumber.replaceFirst("00", "+");
+  }
+  phoneNumber = phoneNumber.replaceAll(" ", "").replaceAll("-", "");
+  print(phoneNumber);
 }
