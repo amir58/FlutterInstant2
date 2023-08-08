@@ -431,4 +431,32 @@ main() {
   }
   phoneNumber = phoneNumber.replaceAll(" ", "").replaceAll("-", "");
   print(phoneNumber);
+
+  print('-----------------');
+  // Casting
+  // String => int
+  // String => double
+  // int => double
+  // int => String
+  // double => int
+  // double => String
+
+  int number7 = 1;
+  String number7Str = number7.toString();
+  double number7Double = number7.toDouble();
+
+  double number8 = 1;
+  print(number8.toString());
+  print(number8.toInt());
+
+  // String strNumber = "100";
+  String strNumber = "100q";
+
+  // int strInt = int.parse(strNumber);
+  int strInt = int.tryParse(strNumber) ?? 0;
+  print(strInt);
+
+  // double strDouble = double.parse(strNumber);
+  double strDouble = double.tryParse(strNumber) ?? 0;
+  print(strDouble);
 }
