@@ -5,7 +5,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,21 +17,32 @@ class MyApp extends StatelessWidget {
 }
 
 class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.menu),
-        title: const Text('First Screen'),
-        actions: const [
-          Icon(Icons.favorite),
-          Icon(Icons.search),
-          Icon(Icons.more_vert),
+        title: Text("First"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              print('Search');
+            },
+            icon: Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {
+              print('Notifications');
+            },
+            icon: Icon(Icons.notifications),
+          ),
         ],
-        // backgroundColor: Colors.purple,
+      ),
+      body: Center(
+        child: Text("This is body"),
       ),
     );
   }
 }
-
