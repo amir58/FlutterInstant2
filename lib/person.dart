@@ -1,7 +1,17 @@
+// Variables, Named constructor, Encapsulation => Design
+
 class Person {
+  // Global variables => class,    purple, class lifecycle
+  // Local variables  => function, white,  function lifecycle
   String name = "";
   String age = "";
   String address = "";
+
+  testVariables(String name){
+    // this => global variable
+    this.name = name;
+    print(name);
+  }
 
   // Constructor
   // 1 : function
@@ -17,6 +27,10 @@ class Person {
     print('New object from Person class');
     printData();
   }
+
+  Person.male(this.name, this.age, this.address);
+  
+  Person.female(this.name, this.age, this.address);
 
   void printData() {
     print('---------------');

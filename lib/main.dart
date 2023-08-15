@@ -11,37 +11,56 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: FirstScreen(),
+      home: const LoginScreen(),
     );
   }
 }
 
-class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
+  // Layouts => Column, Row, Stack
+  // Widget , Widgets
+  // Widget  => child
+  // Widgets => children
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("First"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Search');
-            },
-            icon: Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {
-              print('Notifications');
-            },
-            icon: Icon(Icons.notifications),
-          ),
-        ],
+        title: const Text("Login"),
       ),
-      body: Center(
-        child: Text("This is body"),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.email),
+              ),
+            ),
+            const SizedBox(height: 15),
+            TextFormField(
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.lock),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                child: const Text("Login"),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
