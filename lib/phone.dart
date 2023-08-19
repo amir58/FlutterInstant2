@@ -51,4 +51,10 @@ class Phone {
   set price(double value) {
     _price = value;
   }
+
+  @override
+  String toString() {
+    return 'Phone{name: $name, _os: $_os, _price: $_price}';
+  }
+
 }
