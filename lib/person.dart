@@ -25,7 +25,6 @@ class Person {
     required this.address,
   }) {
     print('New object from Person class');
-    printData();
   }
 
   Person.male(this.name, this.age, this.address);

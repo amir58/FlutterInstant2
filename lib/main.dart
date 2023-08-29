@@ -16,14 +16,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  // Layouts => Column, Row, Stack
-  // Widget , Widgets
-  // Widget  => child
-  // Widgets => children
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+  bool obscureText = true;
+
+  // Layouts => Column, Row, Stack
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,11 +46,21 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             TextFormField(
-              obscureText: true,
-              decoration: const InputDecoration(
+              obscureText: obscureText,
+              decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.lock),
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    obscureText = !obscureText;
+                    setState(() {});
+                  },
+                  icon: Icon(
+                      obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                ),
               ),
             ),
             const SizedBox(height: 15),
@@ -66,7 +79,9 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RegisterScreen(),),
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterScreen(),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(shape: const StadiumBorder()),

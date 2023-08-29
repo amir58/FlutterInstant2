@@ -13,7 +13,7 @@ class BaseScreen {
   }
 
   void showLoadingAnimation() {
-    print('showLoadingAnimation');
+    print('showCircleLoadingAnimation');
   }
 
   void hideLoadingAnimation() {
