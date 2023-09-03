@@ -16,6 +16,75 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class ExpandScreen extends StatelessWidget {
+  const ExpandScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Column(
+        children: [
+          // Total => 6
+          Expanded(
+            // 3/6
+            flex: 3,
+            child: Container(
+              height: 100,
+              color: Colors.black,
+            ),
+          ),
+          Expanded(
+            // 1/6
+            child: Container(
+              height: 100,
+              color: Colors.blue,
+            ),
+          ),
+          Expanded(
+            // 1/6
+            flex: 1,
+            child: Row(
+              children: [
+                // Total => 4
+                Expanded(
+                  // 1/4
+                  child: Container(
+                    width: 100,
+                    color: Colors.red,
+                  ),
+                ),
+                Expanded(
+                  // 2/4
+                  flex: 2,
+                  child: Container(
+                    width: 100,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                Expanded(
+                  // 1/4
+                  child: Container(
+                    width: 100,
+                    color: Colors.pink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            // 1/6
+            child: Container(
+              height: 100,
+              color: Colors.green,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -36,6 +105,13 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
+          // Main  => Vertical
+          mainAxisAlignment: MainAxisAlignment.center,
+
+          // Cross => Horizontal
+          crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
             TextFormField(
               decoration: const InputDecoration(
@@ -57,36 +133,46 @@ class _LoginScreenState extends State<LoginScreen> {
                     setState(() {});
                   },
                   icon: Icon(
-                      obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility),
+                      obscureText ? Icons.visibility_off : Icons.visibility),
                 ),
               ),
             ),
             const SizedBox(height: 15),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                child: const Text("Login"),
-              ),
-            ),
-            const SizedBox(height: 5),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const RegisterScreen(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                child: const Text("Register"),
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              // Main  => Horizontal
+              mainAxisAlignment: MainAxisAlignment.center,
+
+              // Cross => Vertical
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  // 2/3
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style:
+                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    child: const Text("Login"),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  // 1/3
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                    style:
+                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    child: const Text("Register"),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

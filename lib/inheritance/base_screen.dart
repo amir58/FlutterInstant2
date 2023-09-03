@@ -1,6 +1,9 @@
 // Parent class
 // Super class
-class BaseScreen {
+abstract class BaseScreen {
+
+  void getData();
+
   void checkInternet() {
     _callGoogle();
     print('checkInternet');

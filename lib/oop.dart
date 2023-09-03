@@ -7,6 +7,7 @@
 // ClassName objectName = ClassName();
 
 import 'package:instant2/inheritance/home_screen.dart';
+import 'package:instant2/oop/abstract.dart';
 import 'package:instant2/phone.dart';
 
 main() {
@@ -49,6 +50,8 @@ main() {
 
   // numberOne = 1; // WRONG
   // numberTwo = 2; // WRONG
+
+  // Animal animal = Animal();
 }
 
 class Test {
