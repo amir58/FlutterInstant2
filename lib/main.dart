@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant2/ui/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -85,101 +86,6 @@ class ExpandScreen extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  bool obscureText = true;
-
-  // Layouts => Column, Row, Stack
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          // Main  => Vertical
-          mainAxisAlignment: MainAxisAlignment.center,
-
-          // Cross => Horizontal
-          crossAxisAlignment: CrossAxisAlignment.center,
-
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextFormField(
-              obscureText: obscureText,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    obscureText = !obscureText;
-                    setState(() {});
-                  },
-                  icon: Icon(
-                      obscureText ? Icons.visibility_off : Icons.visibility),
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              // Main  => Horizontal
-              mainAxisAlignment: MainAxisAlignment.center,
-
-              // Cross => Vertical
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  // 2/3
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    child: const Text("Login"),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  // 1/3
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
-                        ),
-                      );
-                    },
-                    style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    child: const Text("Register"),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -236,7 +142,9 @@ class RegisterScreen extends StatelessWidget {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
                 child: const Text("Register"),
               ),
