@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/main.dart';
 import 'package:instant2/ui/home_screen.dart';
 
@@ -19,86 +20,153 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  // Define a form key
+  // Wrap Column widget by Form widget
+  // bind form key variable with Form widget
+  // write TextFormField validators
+  // call form key variable and validate the form
+
+  final formKey = GlobalKey<FormState>();
+
   // Layouts => Column, Row, Stack
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
+        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: Container(
+        color: Colors.green,
         child: Column(
-          mainAxisSize: MainAxisSize.max,
-          // Main  => Vertical
-          mainAxisAlignment: MainAxisAlignment.start,
-
-          // Cross => Horizontal
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: [
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email),
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Icon(
+                Icons.ac_unit_rounded,
+                size: 100,
+                color: Colors.white,
               ),
             ),
-            const SizedBox(height: 15),
-            TextFormField(
-              controller: passwordController,
-              obscureText: obscureText,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    obscureText = !obscureText;
-                    setState(() {});
-                  },
-                  icon: Icon(
-                      obscureText ? Icons.visibility_off : Icons.visibility),
+            Expanded(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              // Main  => Horizontal
-              mainAxisAlignment: MainAxisAlignment.center,
+                child: Form(
+                  key: formKey, // Binding
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    // Main  => Vertical
+                    mainAxisAlignment: MainAxisAlignment.start,
 
-              // Cross => Vertical
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  // 2/3
-                  child: ElevatedButton(
-                    onPressed: () => login(),
-                    style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    child: const Text("Login"),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  // 1/3
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
+                    // Cross => Horizontal
+                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                    children: [
+                      TextFormField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                          prefixIcon: Icon(Icons.email),
                         ),
-                      );
-                    },
-                    style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    child: const Text("Register"),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Email required!";
+                          }
+                          // Not contain @ OR not contain .
+                          if (!value.contains("@") || !value.contains(".")) {
+                            return "Invalid email!";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      TextFormField(
+                        controller: passwordController,
+                        obscureText: obscureText,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          border: const OutlineInputBorder(),
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              obscureText = !obscureText;
+                              setState(() {});
+                            },
+                            icon: Icon(
+                              obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Password required!";
+                          }
+                          if (value.length < 6) {
+                            return "Password must be at least 6 characters!";
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      Container(
+                        alignment: AlignmentDirectional.centerEnd,
+                        padding: const EdgeInsets.all(5),
+                        child: const Text("Forget password ?"),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        // Main  => Horizontal
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        // Cross => Vertical
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            // 2/3
+                            child: ElevatedButton(
+                              onPressed: () => login(),
+                              style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder()),
+                              child: const Text("Login"),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            // 1/3
+                            child: OutlinedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const RegisterScreen(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  shape: const StadiumBorder()),
+                              child: const Text("Register"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -107,18 +175,45 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
+    // Not validate => return
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
     String email = emailController.text;
     String password = passwordController.text;
 
     if (email == "amir@gmail.com" && password == "123123") {
-      Navigator.pushReplacement(
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => const HomeScreen(),
         ),
+        (route) => false,
       );
     } else {
       print('Email or password wrong!');
+      displaySnackBar('Email or password wrong!');
+      displayToast("Email or password wrong!");
     }
+  }
+
+  void displayToast(String message) {
+    Fluttertoast.cancel();
+
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+    );
+  }
+
+  void displaySnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
