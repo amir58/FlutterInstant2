@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instant2/ui/home_screen.dart';
+import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/login_screen.dart';
 
 void main() {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const LoginScreen(),
+      home: HomeScreen(),
     );
   }
 }

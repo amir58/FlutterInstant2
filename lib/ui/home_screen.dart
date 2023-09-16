@@ -8,36 +8,81 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<String> notes = [
+    '1 ONE',
+    '2',
+    '3 THREE',
+    '4',
+    '5 FIVE',
+    '6',
+    '7 SEVEN',
+    '8',
+    '9 NINE',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: const Text("Home"),
       ),
-      body: Column(
+      body: ListView.builder(
+        itemCount: notes.length,
+        itemBuilder: (context, index) {
+          return buildNoteItem(index);
+        },
+      ),
+    );
+  }
+
+  Widget buildNoteItem(int index) {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            "https://www.mindinventory.com/blog/wp-content/uploads/2022/10/flutter-3.png",
-            height: 150,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              notes[index],
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.black,
+              ),
+            ),
           ),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/whatsapp.png",
-                width: 100,
-                height: 100,
-              ),
-              const SizedBox(width: 15),
-              Image.asset(
-                "assets/images/youtube.png",
-                height: 100,
-                width: 100,
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      notes.removeAt(index);
+                      setState(() {});
+                    },
+                    icon: const Icon(Icons.delete),
+                    label: const Text("Delete"),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.edit),
+                    label: const Text("Edit"),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
