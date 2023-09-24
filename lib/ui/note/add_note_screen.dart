@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant2/ui/note/model/note.dart';
 
 class AddNoteScreen extends StatefulWidget {
   const AddNoteScreen({super.key});
@@ -9,13 +10,15 @@ class AddNoteScreen extends StatefulWidget {
 
 class _AddNoteScreenState extends State<AddNoteScreen> {
   final titleController = TextEditingController();
+  final contentController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Note'),
+        title: Text("Add Note"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -26,26 +29,43 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
               const SizedBox(height: 10),
               TextFormField(
                 controller: titleController,
+                textInputAction: TextInputAction.next,
+                keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text("Title"),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "Title required!";
+                    return "Title required";
                   }
-                  if (value.length < 3) {
+                  if (value.length < 5) {
                     return "Title is very small!";
                   }
-
                   return null;
                 },
               ),
               const SizedBox(height: 10),
+              TextFormField(
+                controller: contentController,
+                textInputAction: TextInputAction.done,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  label: Text("Content"),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "Content required";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => addNewNote(),
+                  onPressed: () => addNote(),
                   child: const Text("Add"),
                 ),
               ),
@@ -56,13 +76,17 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
     );
   }
 
-  void addNewNote() {
+  void addNote() {
     if (!formKey.currentState!.validate()) {
       return;
     }
 
     String title = titleController.text;
 
-    Navigator.pop(context, title);
+    String content = contentController.text;
+
+    final note = Note(title, content);
+
+    Navigator.pop(context, note);
   }
 }

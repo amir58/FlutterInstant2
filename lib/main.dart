@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:instant2/ui/notes/home_screen.dart';
+import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/login_screen.dart';
 
