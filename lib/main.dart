@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instant2/ui/insta/insta_main_screen.dart';
 import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/login_screen.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: HomeScreen(),
+      home: InstaMainScreen(),
     );
   }
 }
@@ -88,7 +89,6 @@ class ExpandScreen extends StatelessWidget {
   }
 }
 
-
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -97,9 +97,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   bool obscureText = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -156,13 +154,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       setState(() {});
                     },
                     icon: Icon(
-                      obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
                 ),
-              ),const SizedBox(height: 15),
+              ),
+              const SizedBox(height: 15),
               TextFormField(
                 obscureText: obscureText,
                 decoration: InputDecoration(
@@ -175,14 +172,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       setState(() {});
                     },
                     icon: Icon(
-                      obscureText
-                          ? Icons.visibility_off
-                          : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                   ),
                 ),
               ),
-
               const SizedBox(height: 15),
               Container(
                 width: double.infinity,
