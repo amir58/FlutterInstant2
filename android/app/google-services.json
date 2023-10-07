@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "429028446113",
+    "project_id": "instant2-ba0b9",
+    "storage_bucket": "instant2-ba0b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:429028446113:android:d6c8c27d1f0468869285e0",
+        "android_client_info": {
+          "package_name": "com.amirmohammed.instant2.instant2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAorcaK-JuHA4mRY81Ai8OphJ2WF-OvgG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

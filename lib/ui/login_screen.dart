@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/main.dart';
@@ -183,7 +184,12 @@ class _LoginScreenState extends State<LoginScreen> {
     String email = emailController.text;
     String password = passwordController.text;
 
-    if (email == "amir@gmail.com" && password == "123123") {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    )
+        .then((value) {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -191,11 +197,30 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         (route) => false,
       );
-    } else {
-      print('Email or password wrong!');
-      displaySnackBar('Email or password wrong!');
-      displayToast("Email or password wrong!");
-    }
+    }).catchError((error) {
+      if (error is FirebaseAuthException) {
+        if (error.code == 'user-not-found') {
+          displayToast('No user found for that email.');
+        } else if (error.code == 'wrong-password') {
+          displayToast('Wrong password provided for that user.');
+        }
+      }
+      Fluttertoast.showToast(msg: error.toString());
+    });
+
+    // if (email == "amir@gmail.com" && password == "123123") {
+    //   Navigator.pushAndRemoveUntil(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => const HomeScreen(),
+    //     ),
+    //     (route) => false,
+    //   );
+    // } else {
+    //   print('Email or password wrong!');
+    //   displaySnackBar('Email or password wrong!');
+    //   displayToast("Email or password wrong!");
+    // }
   }
 
   void displayToast(String message) {

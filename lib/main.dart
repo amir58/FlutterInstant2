@@ -1,10 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
 import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -15,7 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: InstaMainScreen(),
+      home: FirebaseAuth.instance.currentUser == null
+          ? const LoginScreen()
+          : const HomeScreen(),
     );
   }
 }
@@ -99,6 +107,16 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool obscureText = true;
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -133,6 +151,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 15),
               TextFormField(
+                controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -143,6 +162,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 15),
               TextFormField(
+                controller: passwordController,
                 obscureText: obscureText,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -182,7 +202,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    String email = emailController.text;
+                    String password = passwordController.text;
+
+                    createAccount(email, password);
                   },
                   style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
                   child: const Text("Register"),
@@ -193,5 +216,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void createAccount(String email, String password) async {
+    // FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //   email: email,
+    //   password: password,
+    // ).then((value) {
+    //   Fluttertoast.showToast(msg: "AccountCreated!");
+    //   Navigator.pop(context);
+    // })
+    // .catchError((error){
+    //   Fluttertoast.showToast(msg: error.toString());
+    // });
+
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      Fluttertoast.showToast(msg: "AccountCreated!");
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+        Fluttertoast.showToast(msg: 'The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+        Fluttertoast.showToast(
+            msg: 'The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+      Fluttertoast.showToast(msg: e.toString());
+    }
   }
 }
