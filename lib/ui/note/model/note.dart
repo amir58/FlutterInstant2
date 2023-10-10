@@ -1,9 +1,19 @@
-class Note{
+import 'package:firebase_auth/firebase_auth.dart';
 
-  String _title;
-  String _content;
+class Note {
+  String _id = '';
+  String _userId = '';
+  String _title = '';
+  String _content = '';
 
-  Note(this._title, this._content);
+  Note(this._id, this._title, this._content);
+
+  Note.fromMap(Map<String,dynamic> data){
+    _id = data['id'];
+    _userId = data['userId'];
+    _title = data['title'];
+    _content = data['content'];
+  }
 
   String get content => _content;
 
@@ -15,5 +25,26 @@ class Note{
 
   set title(String value) {
     _title = value;
+  }
+
+  String get userId => _userId;
+
+  set userId(String value) {
+    _userId = value;
+  }
+
+  String get id => _id;
+
+  set id(String value) {
+    _id = value;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
+      'title': title,
+      'content': content,
+    };
   }
 }
