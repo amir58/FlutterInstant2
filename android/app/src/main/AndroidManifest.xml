@@ -5,6 +5,7 @@
 
     <application
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         android:label="instant2"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

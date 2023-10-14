@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:instant2/ui/login_screen.dart';
+import 'package:instant2/ui/note/login_screen.dart';
 import 'package:instant2/ui/note/add_note_screen.dart';
 import 'package:instant2/ui/note/edit_note_screen.dart';
 import 'package:instant2/ui/note/model/note.dart';
+import 'package:instant2/ui/note/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +43,17 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("Home"),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfileScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.person),
+          ),
           IconButton(
             onPressed: () {
               // Delete current user data

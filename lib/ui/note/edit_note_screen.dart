@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instant2/ui/note/model/note.dart';
 
@@ -15,6 +17,9 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
   final contentController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  final auth = FirebaseAuth.instance;
+  final firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -93,8 +98,19 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     String title = titleController.text;
     String content = contentController.text;
 
-    final note = Note('',title, content);
+    widget.note.title = title;
+    widget.note.content = content;
 
-    Navigator.pop(context, note);
+    // final note = Note('',title, content);
+
+    firestore
+        .collection('notes')
+        .doc(widget.note.id)
+        .update(widget.note.toMap())
+        .then((value) {
+      Navigator.pop(context, widget.note);
+    }).catchError((error) {
+      print(error);
+    });
   }
 }

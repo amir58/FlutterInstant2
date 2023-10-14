@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/main.dart';
 import 'package:instant2/ui/note/home_screen.dart';
+import 'package:instant2/ui/note/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
