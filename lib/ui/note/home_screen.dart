@@ -6,6 +6,7 @@ import 'package:instant2/ui/note/add_note_screen.dart';
 import 'package:instant2/ui/note/edit_note_screen.dart';
 import 'package:instant2/ui/note/model/note.dart';
 import 'package:instant2/ui/note/profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,10 +23,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getNotes();
+    isLoggedIn();
   }
 
   void getNotes() {
-    firestore.collection("notes").get().then((value) {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    firestore
+        .collection("notes")
+        .where('userId', isEqualTo: userId)
+        .get()
+        .then((value) {
       myNotes.clear();
       for (var document in value.docs) {
         final note = Note.fromMap(document.data());
@@ -58,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               // Delete current user data
               FirebaseAuth.instance.signOut();
-
+              saveLogout();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -185,5 +193,16 @@ class _HomeScreenState extends State<HomeScreen> {
   updateCurrentNote(int index, Note value) {
     myNotes[index] = value;
     setState(() {});
+  }
+
+  void isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final loggedIn = prefs.getBool('loggedIn');
+    print('LoggedIn => $loggedIn');
+  }
+
+  void saveLogout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('loggedIn', false);
   }
 }

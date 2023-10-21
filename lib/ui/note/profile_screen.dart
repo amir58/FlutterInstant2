@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instant2/shared.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -32,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    getUserDataFromLocalDataSource();
     getUserData();
   }
 
@@ -151,8 +155,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userId = auth.currentUser!.uid;
 
     firestore.collection('users').doc(userId).get().then((value) {
+      saveUserDataInLocalDataSource(value.data()!);
       updateUi(value.data()!);
     }).catchError((error) {});
+  }
+
+  void saveUserDataInLocalDataSource(
+    Map<String, dynamic> map,
+  ) async {
+    final json = jsonEncode(map);
+    PreferenceUtils.setString('userData', json);
+  }
+
+  void getUserDataFromLocalDataSource() async {
+    final json = PreferenceUtils.getString('userData');
+    final userData = jsonDecode(json!);
+    updateUi(userData);
   }
 
   void updateUi(Map<String, dynamic> map) {
