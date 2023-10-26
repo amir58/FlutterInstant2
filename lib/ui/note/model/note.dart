@@ -6,9 +6,11 @@ class Note {
   String _title = '';
   String _content = '';
 
-  Note(this._id, this._title, this._content);
+  Note(this._id, this._title, this._content){
+    userId = FirebaseAuth.instance.currentUser!.uid;
+  }
 
-  Note.fromMap(Map<String,dynamic> data){
+  Note.fromMap(Map<dynamic, dynamic> data) {
     _id = data['id'];
     _userId = data['userId'];
     _title = data['title'];
@@ -42,7 +44,7 @@ class Note {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'userId': FirebaseAuth.instance.currentUser!.uid,
+      'userId': userId,
       'title': title,
       'content': content,
     };

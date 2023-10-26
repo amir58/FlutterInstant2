@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void saveLoggedIn() async {
-    PreferenceUtils.setBool('loggedIn', true);
+    PreferenceUtils.setBool(PrefKeys.loggedIn, true);
   }
 
   void displayToast(String message) {

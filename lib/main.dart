@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
+import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/note/login_screen.dart';
@@ -12,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await PreferenceUtils.init();
+  await NoteDatabase.init();
 
   runApp(MyApp());
 }

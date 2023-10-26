@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instant2/shared.dart';
 import 'package:instant2/ui/note/login_screen.dart';
 import 'package:instant2/ui/note/add_note_screen.dart';
 import 'package:instant2/ui/note/edit_note_screen.dart';
@@ -196,13 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    final loggedIn = prefs.getBool('loggedIn');
+    final loggedIn = PreferenceUtils.getBool(PrefKeys.loggedIn);
     print('LoggedIn => $loggedIn');
   }
 
   void saveLogout() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('loggedIn', false);
+    PreferenceUtils.setBool(PrefKeys.loggedIn, false);
   }
 }
