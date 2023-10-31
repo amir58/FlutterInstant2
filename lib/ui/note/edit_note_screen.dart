@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instant2/ui/note/model/note.dart';
 
+import 'database/note_database.dart';
+
 class EditNoteScreen extends StatefulWidget {
   const EditNoteScreen({super.key, required this.note});
 
@@ -103,6 +105,8 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
 
     // final note = Note('',title, content);
 
+    NoteDatabase.updateNote(widget.note);
+
     firestore
         .collection('notes')
         .doc(widget.note.id)
@@ -112,5 +116,6 @@ class _EditNoteScreenState extends State<EditNoteScreen> {
     }).catchError((error) {
       print(error);
     });
+
   }
 }

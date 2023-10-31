@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:instant2/shared.dart';
+import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/login_screen.dart';
 import 'package:instant2/ui/note/add_note_screen.dart';
 import 'package:instant2/ui/note/edit_note_screen.dart';
 import 'package:instant2/ui/note/model/note.dart';
 import 'package:instant2/ui/note/profile_screen.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,11 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    getNotes();
+    checkInternetConnection();
     isLoggedIn();
   }
 
-  void getNotes() {
+  void getNotesFromFirestore() {
     final userId = FirebaseAuth.instance.currentUser!.uid;
 
     firestore
@@ -135,6 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .collection("notes")
                         .doc(myNotes[index].id)
                         .delete();
+                    NoteDatabase.deleteNote(myNotes[index].id);
                     myNotes.removeAt(index);
                     setState(() {});
                   },
@@ -167,12 +171,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void openAddNoteScreen() {
+    // FirebaseCrashlytics.instance.crash();
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddNoteScreen(),
       ),
-    ).then((value) => getNotes());
+    ).then((value) => getNotesFromFirestore());
   }
 
   void addNewNote(Note value) {
@@ -191,8 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
     ).then((value) => updateCurrentNote(index, value));
   }
 
-  updateCurrentNote(int index, Note value) {
-    myNotes[index] = value;
+  updateCurrentNote(int index, Note note) {
+    myNotes[index] = note;
     setState(() {});
   }
 
@@ -203,5 +208,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void saveLogout() async {
     PreferenceUtils.setBool(PrefKeys.loggedIn, false);
+  }
+
+  void checkInternetConnection() async {
+    bool hasConnection = await InternetConnectionChecker().hasConnection;
+    if (hasConnection) {
+      print('hasConnection');
+      getNotesFromFirestore();
+    } else {
+      print('Offline');
+      getNotesFromLocalStorage();
+    }
+  }
+
+  void getNotesFromLocalStorage() async {
+    myNotes = await NoteDatabase.getNotes();
+    setState(() {});
   }
 }
