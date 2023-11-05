@@ -46,6 +46,8 @@ dependencies:
   sqflite: ^2.3.0
   internet_connection_checker: ^1.0.0+1
   firebase_crashlytics: ^3.4.3
+  dio: ^5.3.3
+  
 
 dev_dependencies:
   flutter_test:

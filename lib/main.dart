@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
+import 'package:instant2/ui/json/json_posts_screen.dart';
+import 'package:instant2/ui/json/news_screen.dart';
 import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
@@ -25,9 +27,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: FirebaseAuth.instance.currentUser == null
-          ? const LoginScreen()
-          : const HomeScreen(),
+      home: NewsScreen(),
+      // home: FirebaseAuth.instance.currentUser == null
+      //     ? const LoginScreen()
+      //     : const HomeScreen(),
     );
   }
 }
