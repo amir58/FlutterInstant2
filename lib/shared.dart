@@ -5,7 +5,8 @@ enum PrefKeys {
   loggedIn,
   userData,
   language,
-  theme
+  theme,
+  newsCountry
 }
 
 class PreferenceUtils {
