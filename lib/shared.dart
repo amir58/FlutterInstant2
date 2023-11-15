@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum PrefKeys {
   loggedIn,
   userData,
+  apiToken,
   language,
   theme,
   newsCountry

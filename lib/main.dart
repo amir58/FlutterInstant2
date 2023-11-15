@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/shared.dart';
+import 'package:instant2/ui/e/core/app_dio.dart';
+import 'package:instant2/ui/e/ui/e_login_screen.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
 import 'package:instant2/ui/json/json_posts_screen.dart';
 import 'package:instant2/ui/news/ui/news_main.dart';
@@ -17,6 +19,7 @@ void main() async {
   await Firebase.initializeApp();
   await PreferenceUtils.init();
   await NoteDatabase.init();
+  AppDio.init();
 
   runApp(MyApp());
 }
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: NewMainScreen(),
+      home: ELoginScreen(),
       // home: FirebaseAuth.instance.currentUser == null
       //     ? const LoginScreen()
       //     : const HomeScreen(),
