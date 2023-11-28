@@ -1,0 +1,21 @@
+1 => BLoc, Provider, Get X, RiverPod
+
+2 => Bloc Widgets
+
+LoginCubit
+
+*BlocProvider => create object from bloc class
+
+BlocListener => Listen states
+
+BlocBuilder => Refresh UI
+
+BlocConsumer => BlocListener + BlocBuilder
+
+3 =>
+
+context.read<CounterCubit>().increment()
+
+BlocProvider.of<CounterCubit>(context).increment()
+
+cubit.increment()

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/e/core/app_dio.dart';
@@ -13,6 +14,8 @@ import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/note/login_screen.dart';
+import 'package:instant2/ui/state_management/counter/counter_cubit.dart';
+import 'package:instant2/ui/state_management/counter/counter_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +34,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: ELoginScreen(),
+      home: CounterPage(),
+      // home: ELoginScreen(),
       // home: FirebaseAuth.instance.currentUser == null
       //     ? const LoginScreen()
       //     : const HomeScreen(),
