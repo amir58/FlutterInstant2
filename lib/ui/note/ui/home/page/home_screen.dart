@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/note/database/note_database.dart';
-import 'package:instant2/ui/note/login_screen.dart';
+import 'package:instant2/ui/note/ui/home/manager/home_cubit.dart';
+import 'package:instant2/ui/note/ui/login/page/login_screen.dart';
 import 'package:instant2/ui/note/add_note_screen.dart';
 import 'package:instant2/ui/note/edit_note_screen.dart';
 import 'package:instant2/ui/note/model/note.dart';
@@ -20,78 +22,72 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Note> myNotes = [];
-  final firestore = FirebaseFirestore.instance;
+  final cubit = HomeCubit();
 
   @override
   void initState() {
     super.initState();
-    checkInternetConnection();
+    cubit.checkInternetConnection();
     isLoggedIn();
-  }
-
-  void getNotesFromFirestore() {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-
-    firestore
-        .collection("notes")
-        .where('userId', isEqualTo: userId)
-        .get()
-        .then((value) {
-      myNotes.clear();
-      for (var document in value.docs) {
-        final note = Note.fromMap(document.data());
-        myNotes.add(note);
-      }
-      setState(() {});
-    }).catchError((error) {
-      print(error);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfileScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.person),
-          ),
-          IconButton(
-            onPressed: () {
-              // Delete current user data
-              FirebaseAuth.instance.signOut();
-              saveLogout();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.logout),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => openAddNoteScreen(),
-        child: const Icon(Icons.add),
-      ),
-      body: ListView.builder(
-        itemCount: myNotes.length,
-        itemBuilder: (context, index) {
-          print(index);
-          return buildNoteItem(index);
-        },
+    print('BUILD');
+    return BlocProvider(
+      create: (context) => cubit,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Home"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person),
+            ),
+            IconButton(
+              onPressed: () {
+                // Delete current user data
+                FirebaseAuth.instance.signOut();
+                saveLogout();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.logout),
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => openAddNoteScreen(),
+          child: const Icon(Icons.add),
+        ),
+        body: BlocBuilder<HomeCubit, HomeState>(
+          buildWhen: (previous, current) {
+            return current is GetNotesSuccessState ||
+                current is DeleteNoteSuccessState ||
+                current is UpdateNoteSuccessState;
+          },
+          builder: (context, state) {
+            print('HomeState => ${state.runtimeType}');
+            return ListView.builder(
+              itemCount: cubit.myNotes.length,
+              itemBuilder: (context, index) {
+                print(index);
+                return buildNoteItem(index);
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -110,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding:
                 const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
             child: Text(
-              myNotes[index].title,
+              cubit.myNotes[index].title,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
@@ -121,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
             child: Text(
-              myNotes[index].content,
+              cubit.myNotes[index].content,
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w400,
@@ -133,15 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: ElevatedButton.icon(
-                  onPressed: () {
-                    firestore
-                        .collection("notes")
-                        .doc(myNotes[index].id)
-                        .delete();
-                    NoteDatabase.deleteNote(myNotes[index].id);
-                    myNotes.removeAt(index);
-                    setState(() {});
-                  },
+                  onPressed: () => cubit.deleteNote(index: index),
                   icon: const Icon(Icons.delete),
                   label: const Text("Delete"),
                   style: ElevatedButton.styleFrom(
@@ -177,28 +165,23 @@ class _HomeScreenState extends State<HomeScreen> {
       MaterialPageRoute(
         builder: (context) => AddNoteScreen(),
       ),
-    ).then((value) => getNotesFromFirestore());
+    ).then((value) => cubit.getNotesFromFirestore());
   }
 
-  void addNewNote(Note value) {
-    myNotes.add(value);
-    setState(() {});
-  }
+  // void addNewNote(Note value) {
+  //   cubit.myNotes.add(value);
+  //   setState(() {}); // TODO
+  // }
 
   void editNote(int index) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => EditNoteScreen(
-          note: myNotes[index],
+          note: cubit.myNotes[index],
         ),
       ),
-    ).then((value) => updateCurrentNote(index, value));
-  }
-
-  updateCurrentNote(int index, Note note) {
-    myNotes[index] = note;
-    setState(() {});
+    ).then((value) => cubit.updateCurrentNote(index, value));
   }
 
   void isLoggedIn() async {
@@ -208,21 +191,5 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void saveLogout() async {
     PreferenceUtils.setBool(PrefKeys.loggedIn, false);
-  }
-
-  void checkInternetConnection() async {
-    bool hasConnection = await InternetConnectionChecker().hasConnection;
-    if (hasConnection) {
-      print('hasConnection');
-      getNotesFromFirestore();
-    } else {
-      print('Offline');
-      getNotesFromLocalStorage();
-    }
-  }
-
-  void getNotesFromLocalStorage() async {
-    myNotes = await NoteDatabase.getNotes();
-    setState(() {});
   }
 }
