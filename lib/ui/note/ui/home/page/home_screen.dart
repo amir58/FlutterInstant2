@@ -163,7 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddNoteScreen(),
+        builder: (context) => BlocProvider.value(
+          value: cubit,
+          child: const AddNoteScreen(),
+        ),
       ),
     ).then((value) => cubit.getNotesFromFirestore());
   }

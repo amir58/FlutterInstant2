@@ -8,11 +8,14 @@ import 'package:instant2/ui/e/core/app_dio.dart';
 import 'package:instant2/ui/e/ui/e_login_screen.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
 import 'package:instant2/ui/json/json_posts_screen.dart';
+import 'package:instant2/ui/maps/map_sample.dart';
 import 'package:instant2/ui/news/ui/news_main.dart';
 import 'package:instant2/ui/news/ui/news_screen.dart';
 import 'package:instant2/ui/note/database/note_database.dart';
+import 'package:instant2/ui/note/ui/favourites/favourites_cubit.dart';
 import 'package:instant2/ui/note/ui/home/page/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
+import 'package:instant2/ui/note/ui/login/manager/login_cubit.dart';
 import 'package:instant2/ui/note/ui/login/page/login_screen.dart';
 import 'package:instant2/ui/state_management/counter/counter_cubit.dart';
 import 'package:instant2/ui/state_management/counter/counter_page.dart';
@@ -30,15 +33,23 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => FavouritesCubit(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: const MapSample(),
+        // home: CounterPage(),
+        // home: ELoginScreen(),
+        // home: FirebaseAuth.instance.currentUser == null
+        //     ? const LoginScreen()
+        //     : const HomeScreen(),
       ),
-      // home: CounterPage(),
-      // home: ELoginScreen(),
-      home: FirebaseAuth.instance.currentUser == null
-          ? const LoginScreen()
-          : const HomeScreen(),
     );
   }
 }
