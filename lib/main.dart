@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/shared.dart';
+import 'package:instant2/ui/animations/lottie/lottie_screen.dart';
 import 'package:instant2/ui/e/core/app_dio.dart';
 import 'package:instant2/ui/e/ui/e_login_screen.dart';
 import 'package:instant2/ui/insta/insta_main_screen.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: const MapSample(),
+        home: const NewMainScreen(),
         // home: CounterPage(),
         // home: ELoginScreen(),
         // home: FirebaseAuth.instance.currentUser == null
