@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instant2/generated/l10n.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/news/manager/news_cubit.dart';
 import 'package:instant2/ui/news/model/news_response.dart';
@@ -18,6 +19,14 @@ class NewMainScreen extends StatefulWidget {
 class _NewMainScreenState extends State<NewMainScreen> {
   int currentIndex = 0;
 
+  final translatedTitles = [
+    S().business,
+    S().sport,
+    S().health,
+    S().science,
+    S().technology,
+  ];
+
   final titles = [
     'Business',
     'Sports',
@@ -27,11 +36,11 @@ class _NewMainScreenState extends State<NewMainScreen> {
   ];
 
   final screens = [
-    NewsScreen(category: 'business'),
-    NewsScreen(category: 'sports'),
-    NewsScreen(category: 'health'),
-    NewsScreen(category: 'science'),
-    NewsScreen(category: 'technology'),
+    const NewsScreen(category: 'business'),
+    const NewsScreen(category: 'sports'),
+    const NewsScreen(category: 'health'),
+    const NewsScreen(category: 'science'),
+    const NewsScreen(category: 'technology'),
   ];
 
   final cubit = NewsCubit();
@@ -51,7 +60,7 @@ class _NewMainScreenState extends State<NewMainScreen> {
       create: (context) => cubit,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(titles[currentIndex]),
+          title: Text(translatedTitles[currentIndex]),
           actions: [
             IconButton(
               onPressed: () => navToSettingsScreen(),
@@ -68,26 +77,26 @@ class _NewMainScreenState extends State<NewMainScreen> {
               cubit.getNewsByCategory(titles[currentIndex]);
             });
           },
-          items: const [
+          items:  [
             BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Business',
+              icon: const Icon(Icons.business),
+              label: translatedTitles[0],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.sports_baseball),
-              label: 'Sport',
+              icon: const Icon(Icons.sports_baseball),
+              label: translatedTitles[1],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.healing),
-              label: 'Health',
+              icon: const Icon(Icons.healing),
+              label: translatedTitles[2],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.science),
-              label: 'Science',
+              icon: const Icon(Icons.science),
+              label: translatedTitles[3],
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.biotech),
-              label: 'Technology',
+              icon: const Icon(Icons.biotech),
+              label: translatedTitles[4],
             ),
           ],
         ),

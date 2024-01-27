@@ -1,0 +1,14 @@
+{
+  "settings" : "الاعدادات",
+  "country" : "الدولة",
+  "notifications" : "الاشعارات",
+  "theme" : "المظهر",
+  "language" : "اللغة",
+  "dark" : "داكن",
+  "light" : "فاتح",
+  "business" : "الاعمال",
+  "sport" : "الرياضة",
+  "health" : "الصحة",
+  "science" : "العلوم",
+  "technology" : "التكنولوجيا"
+}

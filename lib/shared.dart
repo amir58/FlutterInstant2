@@ -6,7 +6,7 @@ enum PrefKeys {
   userData,
   apiToken,
   language,
-  theme,
+  darkTheme,
   newsCountry
 }
 
