@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:instant2/generated/l10n.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/news/manager/news_cubit.dart';
@@ -77,7 +78,7 @@ class _NewMainScreenState extends State<NewMainScreen> {
               cubit.getNewsByCategory(titles[currentIndex]);
             });
           },
-          items:  [
+          items: [
             BottomNavigationBarItem(
               icon: const Icon(Icons.business),
               label: translatedTitles[0],
@@ -150,11 +151,20 @@ class _NewMainScreenState extends State<NewMainScreen> {
   }
 
   void navToSettingsScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const NewsSettingsScreen(),
-      ),
-    ).then((value) => cubit.getNewsByCategory(titles[currentIndex]));
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => const NewsSettingsScreen(),
+    //   ),
+    // ).then((value) => cubit.getNewsByCategory(titles[currentIndex]));
+
+    // Navigator.pushNamed(
+    //   context,
+    //   '/news_settings',
+    // ).then((value) => cubit.getNewsByCategory(titles[currentIndex]));
+
+    // context.go(NewsSettingsScreen.routeName);
+    context.push(NewsSettingsScreen.routeName)
+        .then((value) => cubit.getNewsByCategory(titles[currentIndex]));
   }
 }

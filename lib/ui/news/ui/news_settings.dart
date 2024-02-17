@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:instant2/generated/l10n.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/news/manager/app_manager/app_cubit.dart';
@@ -7,6 +8,8 @@ import 'package:instant2/ui/news/ui/news_select_country_screen.dart';
 
 class NewsSettingsScreen extends StatefulWidget {
   const NewsSettingsScreen({super.key});
+
+  static const String routeName = "/news_settings";
 
   @override
   State<NewsSettingsScreen> createState() => _NewsSettingsScreenState();
@@ -122,7 +125,8 @@ class _NewsSettingsScreenState extends State<NewsSettingsScreen> {
                       PrefKeys.darkTheme,
                       false,
                     );
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    context.pop();
                   },
                   child: Container(
                     width: double.infinity,

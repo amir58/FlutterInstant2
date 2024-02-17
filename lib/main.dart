@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:instant2/generated/l10n.dart';
+import 'package:instant2/go_router.dart';
+import 'package:instant2/named_routes.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/animations/lottie/lottie_screen.dart';
 import 'package:instant2/ui/e/core/app_dio.dart';
@@ -15,6 +17,7 @@ import 'package:instant2/ui/maps/map_sample.dart';
 import 'package:instant2/ui/news/manager/app_manager/app_cubit.dart';
 import 'package:instant2/ui/news/ui/news_main.dart';
 import 'package:instant2/ui/news/ui/news_screen.dart';
+import 'package:instant2/ui/news/ui/news_settings.dart';
 import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/ui/favourites/favourites_cubit.dart';
 import 'package:instant2/ui/note/ui/home/page/home_screen.dart';
@@ -48,12 +51,10 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
-          return MaterialApp(
+          return MaterialApp.router(
+            routerConfig: router,
             locale: Locale(
-              PreferenceUtils.getString(
-                PrefKeys.language,
-                'en'
-              ),
+              PreferenceUtils.getString(PrefKeys.language, 'en'),
             ),
             supportedLocales: S.delegate.supportedLocales,
             localizationsDelegates: const [
@@ -110,12 +111,13 @@ class MyApp extends StatelessWidget {
             themeMode: PreferenceUtils.getBool(PrefKeys.darkTheme)
                 ? ThemeMode.dark
                 : ThemeMode.light,
-            home: const NewMainScreen(),
+            // home: const NewMainScreen(),
             // home: CounterPage(),
             // home: ELoginScreen(),
             // home: FirebaseAuth.instance.currentUser == null
             //     ? const LoginScreen()
             //     : const HomeScreen(),
+
           );
         },
       ),
