@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/news/model/news_response.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class NewsXController extends GetxController{
 
@@ -10,6 +11,7 @@ class NewsXController extends GetxController{
   var articles = <Articles>[].obs;
 
   Future<void> getNewsByCategory(String category) async {
+    dio.interceptors.add(PrettyDioLogger());
 
     final response = await dio.get(
       //    BASE URL      / END POINT

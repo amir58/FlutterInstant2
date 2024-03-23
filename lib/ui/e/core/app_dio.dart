@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/e/core/app_endpoints.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class AppDio {
   static late Dio _dio;
@@ -8,6 +9,8 @@ class AppDio {
   static void init() {
     BaseOptions baseOptions = BaseOptions(baseUrl: EndPoints.baseUrl);
     _dio = Dio(baseOptions);
+    _dio.interceptors.add(PrettyDioLogger());
+
   }
 
   static Future<Response<dynamic>> get({
