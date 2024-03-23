@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instant2/ui/news/model/news_response.dart';
@@ -15,6 +17,31 @@ class NewsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
+  late Timer timer;
+  double dimension = 35;
+  Color iconColor = Colors.black;
+
+  @override
+  void initState() {
+    super.initState();
+
+    timer = Timer.periodic(
+      const Duration(milliseconds: 750),
+      (timer) {
+        setState(() {
+          dimension = dimension == 35 ? 40 : 35;
+          iconColor = iconColor == Colors.black ? Colors.blue : Colors.black;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,13 +64,19 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
                     iconSize: 14,
                   ),
                 ),
-                CircleAvatar(
-                  radius: 17,
-                  backgroundColor: Colors.white,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.share),
-                    iconSize: 14,
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 750),
+                  height: dimension,
+                  width: dimension,
+                  child: CircleAvatar(
+                    radius: 17,
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.share),
+                      iconSize: 14,
+                      color: iconColor,
+                    ),
                   ),
                 ),
               ],

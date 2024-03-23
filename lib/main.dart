@@ -1,31 +1,16 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:instant2/generated/l10n.dart';
-import 'package:instant2/go_router.dart';
-import 'package:instant2/named_routes.dart';
 import 'package:instant2/shared.dart';
-import 'package:instant2/ui/animations/lottie/lottie_screen.dart';
 import 'package:instant2/ui/e/core/app_dio.dart';
-import 'package:instant2/ui/e/ui/e_login_screen.dart';
-import 'package:instant2/ui/insta/insta_main_screen.dart';
-import 'package:instant2/ui/json/json_posts_screen.dart';
-import 'package:instant2/ui/maps/map_sample.dart';
 import 'package:instant2/ui/news/manager/app_manager/app_cubit.dart';
+import 'package:instant2/ui/news/ui/get_x/news_x_main.dart';
 import 'package:instant2/ui/news/ui/news_main.dart';
-import 'package:instant2/ui/news/ui/news_screen.dart';
-import 'package:instant2/ui/news/ui/news_settings.dart';
 import 'package:instant2/ui/note/database/note_database.dart';
 import 'package:instant2/ui/note/ui/favourites/favourites_cubit.dart';
-import 'package:instant2/ui/note/ui/home/page/home_screen.dart';
-import 'package:instant2/ui/bmi/bmi_screen.dart';
-import 'package:instant2/ui/note/ui/login/manager/login_cubit.dart';
-import 'package:instant2/ui/note/ui/login/page/login_screen.dart';
-import 'package:instant2/ui/state_management/counter/counter_cubit.dart';
-import 'package:instant2/ui/state_management/counter/counter_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,8 +36,7 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
-          return MaterialApp.router(
-            routerConfig: router,
+          return GetMaterialApp(
             locale: Locale(
               PreferenceUtils.getString(PrefKeys.language, 'en'),
             ),
@@ -112,6 +96,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             // home: const NewMainScreen(),
+            home: const NewMainXScreen(),
             // home: CounterPage(),
             // home: ELoginScreen(),
             // home: FirebaseAuth.instance.currentUser == null
