@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:instant2/generated/l10n.dart';
 import 'package:instant2/go_router.dart';
 import 'package:instant2/named_routes.dart';
@@ -15,6 +16,7 @@ import 'package:instant2/ui/insta/insta_main_screen.dart';
 import 'package:instant2/ui/json/json_posts_screen.dart';
 import 'package:instant2/ui/maps/map_sample.dart';
 import 'package:instant2/ui/news/manager/app_manager/app_cubit.dart';
+import 'package:instant2/ui/news/ui/get_x/news_x_main.dart';
 import 'package:instant2/ui/news/ui/news_main.dart';
 import 'package:instant2/ui/news/ui/news_screen.dart';
 import 'package:instant2/ui/news/ui/news_settings.dart';
@@ -51,8 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
-          return MaterialApp.router(
-            routerConfig: router,
+          return GetMaterialApp(
             locale: Locale(
               PreferenceUtils.getString(PrefKeys.language, 'en'),
             ),
@@ -112,6 +113,7 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             // home: const NewMainScreen(),
+            home: const NewMainXScreen(),
             // home: CounterPage(),
             // home: ELoginScreen(),
             // home: FirebaseAuth.instance.currentUser == null
