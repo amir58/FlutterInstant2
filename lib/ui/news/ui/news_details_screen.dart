@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instant2/ui/news/model/news_response.dart';
 
@@ -72,10 +73,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             pinned: true,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                widget.article.urlToImage,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              background: Hero(
+                tag: widget.article.urlToImage,
+                child: CachedNetworkImage(
+                  imageUrl: widget.article.urlToImage,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
