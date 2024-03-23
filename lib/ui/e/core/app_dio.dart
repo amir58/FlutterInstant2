@@ -1,3 +1,4 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/e/core/app_endpoints.dart';
@@ -10,6 +11,7 @@ class AppDio {
     BaseOptions baseOptions = BaseOptions(baseUrl: EndPoints.baseUrl);
     _dio = Dio(baseOptions);
     _dio.interceptors.add(PrettyDioLogger());
+    _dio.interceptors.add(ChuckerDioInterceptor());
 
   }
 

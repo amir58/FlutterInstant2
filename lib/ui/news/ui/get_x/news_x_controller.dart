@@ -1,3 +1,4 @@
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:instant2/shared.dart';
@@ -12,6 +13,7 @@ class NewsXController extends GetxController{
 
   Future<void> getNewsByCategory(String category) async {
     dio.interceptors.add(PrettyDioLogger());
+    dio.interceptors.add(ChuckerDioInterceptor());
 
     final response = await dio.get(
       //    BASE URL      / END POINT
