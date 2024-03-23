@@ -7,6 +7,7 @@ import 'package:instant2/generated/l10n.dart';
 import 'package:instant2/shared.dart';
 import 'package:instant2/ui/news/manager/news_cubit.dart';
 import 'package:instant2/ui/news/model/news_response.dart';
+import 'package:instant2/ui/news/ui/news_details_screen.dart';
 import 'package:instant2/ui/news/ui/news_screen.dart';
 import 'package:instant2/ui/news/ui/news_settings.dart';
 
@@ -109,37 +110,47 @@ class _NewMainScreenState extends State<NewMainScreen> {
               itemBuilder: (context, index) {
                 Articles article = cubit.articles[index];
 
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(20),
+                return InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewsDetailsScreen(
+                        article: article,
+                      ),
+                    ),
                   ),
-                  margin: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      article.urlToImage.isEmpty
-                          ? const Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Center(
-                                child: Icon(
-                                  Icons.image_not_supported_outlined,
-                                  size: 50,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        article.urlToImage.isEmpty
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.image_not_supported_outlined,
+                                    size: 50,
+                                  ),
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: CachedNetworkImage(
+                                  imageUrl: article.urlToImage,
                                 ),
                               ),
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: CachedNetworkImage(
-                                imageUrl: article.urlToImage,
-                              ),
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 15),
-                        child: Text(article.title),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                          child: Text(article.title),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -164,7 +175,8 @@ class _NewMainScreenState extends State<NewMainScreen> {
     // ).then((value) => cubit.getNewsByCategory(titles[currentIndex]));
 
     // context.go(NewsSettingsScreen.routeName);
-    context.push(NewsSettingsScreen.routeName)
+    context
+        .push(NewsSettingsScreen.routeName)
         .then((value) => cubit.getNewsByCategory(titles[currentIndex]));
   }
 }

@@ -111,6 +111,18 @@ class Articles {
 
   String get content => _content ?? "";
 
+  String get moreContent =>
+      content +
+      content +
+      content +
+      content +
+      content +
+      content +
+      content +
+      content +
+      content +
+      content;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (_source != null) {
