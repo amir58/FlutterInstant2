@@ -140,8 +140,11 @@ class _NewMainScreenState extends State<NewMainScreen> {
                               )
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: CachedNetworkImage(
-                                  imageUrl: article.urlToImage,
+                                child: Hero(
+                                  tag: article.urlToImage,
+                                  child: CachedNetworkImage(
+                                    imageUrl: article.urlToImage,
+                                  ),
                                 ),
                               ),
                         Padding(

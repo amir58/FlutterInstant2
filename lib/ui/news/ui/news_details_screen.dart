@@ -73,10 +73,13 @@ class _NewsDetailsScreenState extends State<NewsDetailsScreen> {
             expandedHeight: 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: CachedNetworkImage(
-                imageUrl: widget.article.urlToImage,
-                width: double.infinity,
-                fit: BoxFit.cover,
+              background: Hero(
+                tag: widget.article.urlToImage,
+                child: CachedNetworkImage(
+                  imageUrl: widget.article.urlToImage,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
