@@ -27,6 +27,7 @@ import 'package:instant2/ui/note/ui/home/page/home_screen.dart';
 import 'package:instant2/ui/bmi/bmi_screen.dart';
 import 'package:instant2/ui/note/ui/login/manager/login_cubit.dart';
 import 'package:instant2/ui/note/ui/login/page/login_screen.dart';
+import 'package:instant2/ui/screen_util/screen_util_login.dart';
 import 'package:instant2/ui/state_management/counter/counter_cubit.dart';
 import 'package:instant2/ui/state_management/counter/counter_page.dart';
 
@@ -115,7 +116,8 @@ class MyApp extends StatelessWidget {
                 ? ThemeMode.dark
                 : ThemeMode.light,
             // home: const NewMainScreen(),
-            home: const NewMainXScreen(),
+            // home: const NewMainXScreen(),
+            home: const ScreenUtilLogin(),
             // home: CounterPage(),
             // home: ELoginScreen(),
             // home: FirebaseAuth.instance.currentUser == null
